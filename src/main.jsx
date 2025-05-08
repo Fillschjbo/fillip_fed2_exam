@@ -1,10 +1,91 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
+import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom";
+import {Header,Footer} from "./components/Layout/index.jsx";
+import {Featured,
+        Venues,
+        Login,
+        Register,
+        SearchResults,
+        EditProfile,
+        Profile,
+        BookingSuccess,
+        CreateVenue,
+        EditVenue,
+        Venue,
+        NotFound
+} from "./routes/index.jsx";
+
+const Layout = () => (
+    <>
+        <Header />
+        <main>
+            <Outlet />
+        </main>
+        <Footer/>
+    </>
+)
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                element: <Featured/>,
+            },
+            {
+                path: "/venues",
+                element: <Venues />
+            },
+            {
+                path: "/venue/:id",
+                element: <Venue />
+            },
+            {
+                path: "/register",
+                element: <Register />
+            },
+            {
+                path: "/login",
+                element: <Login />
+            },
+            {
+                path: "/profile/:id",
+                element: <Profile />
+            },
+            {
+                path: "/results",
+                element: <SearchResults />
+            },
+            {
+                path: "/venue/create",
+                element: <CreateVenue />
+            },
+            {
+                path: "/venue/edit",
+                element: <EditVenue />
+            },
+            {
+                path: "/profile/edit",
+                element: <EditProfile />
+            },
+            {
+                path: "/success",
+                element: <BookingSuccess />
+            },
+        ]
+    },
+    {
+        path: '*',
+        element: <NotFound />
+    }
+])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>,
 )
