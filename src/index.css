@@ -1,16 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Linden+Hill:ital@0;1&display=swap');
-
 @import "tailwindcss";
 
-@theme {
-  --font-primary: 'Lato', serif;
-  --font-hero: 'Linden Hill', serif;
+@font-face {
+    font-family: 'Geist';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/Geist/Geist-Regular.woff2") format("woff2");
 }
 
-body {
-  @apply font-primary;
+@font-face {
+    font-family: 'Galgo';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/GalgoVF.woff2") format("woff2");
 }
 
-html {
-  overflow-x: hidden;
+@layer base {
+    :root {
+        --font-sans: 'Geist', sans-serif;
+        --font-serif: 'Galgo', serif;
+    }
 }
