@@ -1,7 +1,8 @@
 import {useFetch} from "../../hooks/api/useFetch.jsx";
 import {VenueCard} from "../../components/Cards/VenueCard.jsx";
 import {Link} from "react-router-dom";
-import {API_VENUE} from "../../../constants.js";
+import {API_VENUE} from "../../utilities/constants.js";
+
 
 export function Featured(){
     const {data: venues, loading, error} = useFetch(API_VENUE);
