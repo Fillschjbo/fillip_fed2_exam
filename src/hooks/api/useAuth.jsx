@@ -47,6 +47,13 @@ export function useAuth(){
             }
             const result = await response.json();
             setData(result);
+            const user = {
+                name: result.data.name,
+                avatar: result.data.avatar.url,
+            }
+
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("token", result.data.accessToken)
             return result;
         }catch(err){
             setError(err);
