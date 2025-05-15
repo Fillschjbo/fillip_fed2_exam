@@ -2,6 +2,7 @@ import {useFetch} from "../../hooks/api/useFetch.jsx";
 import {VenueCard} from "../../components/Cards/VenueCard.jsx";
 import {Link} from "react-router-dom";
 import {API_VENUE} from "../../utilities/constants.js";
+import {Searchbar} from "../../components/UI/Searchbar.jsx";
 
 
 export function Featured(){
@@ -22,6 +23,7 @@ export function Featured(){
 
     return (
         <>
+            <Searchbar />
             {venues.map((venue) => (
                 <Link to={'/venue/' + venue.id} key={venue.id}>
                     <VenueCard
