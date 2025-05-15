@@ -1,8 +1,53 @@
 import { useSearch } from "../../hooks/api/useSearch.jsx";
 import { Link } from "react-router-dom";
+import {Filter} from "../../components/UI/Filter.jsx";
+import {useState} from "react";
 
 export function SearchResults() {
     const { data: venues, loading, error } = useSearch();
+    const [filters ,setFilters] = useState({
+        guests: null,
+        priceSort: "",
+        ratingSort: "",
+        amenities: {wifi:false, parking:false, breakfast:false, pets:false}
+    });
+
+    const handleFilterChange = (newFilters) => {
+        setFilters(newFilters);
+    };
+
+    let filteredVenues = venues ? [...venues] : [];
+
+    if (filters.guests){
+        filteredVenues = filteredVenues.filter(
+            (venue) => venue.maxGuests >= filters.guests
+        )
+    }
+
+    const activeAmenities = Object.keys(filters.amenities).filter(
+        (key) => filters.amenities[key]
+    );
+    if (activeAmenities.length > 0) {
+        filteredVenues = filteredVenues.filter((venue) =>
+            activeAmenities.every((amenity) => venue.meta[amenity])
+        );
+    }
+
+    if (filters.priceSort) {
+        filteredVenues.sort((a, b) =>
+            filters.priceSort === "highToLow"
+                ? b.price - a.price
+                : a.price - b.price
+        );
+    }
+
+    if (filters.ratingSort) {
+        filteredVenues.sort((a, b) =>
+            filters.ratingSort === "highToLow"
+                ? b.rating - a.rating
+                : a.rating - b.rating
+        );
+    }
 
     if (loading) {
         return <div className="text-center p-4">Loading...</div>;
@@ -23,8 +68,9 @@ export function SearchResults() {
     return (
         <div className="max-w-6xl mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Search Results</h1>
+            <Filter onFilterChange={handleFilterChange} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {venues.map((venue) => (
+                {filteredVenues.map((venue) => (
                     <div
                         key={venue.id}
                         className="border rounded-lg overflow-hidden shadow-md"
