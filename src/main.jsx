@@ -16,6 +16,7 @@ import {Featured,
         Venue,
         NotFound
 } from "./routes/index.jsx";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Layout = () => (
     <>
