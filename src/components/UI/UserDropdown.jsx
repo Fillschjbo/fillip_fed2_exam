@@ -1,5 +1,4 @@
 import {Link} from "react-router-dom";
-import {useRef} from "react";
 import {LuPanelRightClose} from "react-icons/lu";
 
 export function UserDropdown({isOpen, onClose, name, avatar, userIsLoggedIn}){
@@ -36,6 +35,18 @@ export function UserDropdown({isOpen, onClose, name, avatar, userIsLoggedIn}){
                     >
                         Profile
                     </Link>
+                    {localStorage.getItem("venueManager") === "true" ?(
+                        <Link to={"/venue/create"}
+                              className={"block w-full text-center py-4 text-gray-800 hover:bg-[#F0EEFB] md:text-left md:py-2 md:px-4"}
+                              onClick={(e) => {
+                                  e.stopPropagation();
+                                  onClose();
+                              }}
+                        >
+                            Create Post
+                        </Link>
+                    ):("")
+                    }
                     <button
                         onClick={handleLogout}
                         className="block w-full text-center py-4 text-gray-800 hover:bg-[#F0EEFB] md:text-left md:py-2 md:px-4"
