@@ -6,7 +6,7 @@ import {Searchbar} from "../../components/UI/Searchbar.jsx";
 
 
 export function Featured(){
-    const {data: venues, loading, error} = useFetch(API_VENUE);
+    const {data: venues, loading, error} = useFetch(API_VENUE, false);
 
     if(loading){
         return(
