@@ -5,7 +5,7 @@ import {BookingComponent} from "../../components/UI/Booking.jsx";
 
 export function Venue(){
     const {id} = useParams()
-    const {data: venues, loading, error} = useFetch(`${API_VENUE}/${id}?_bookings=true`);
+    const {data: venues, loading, error} = useFetch(`${API_VENUE}/${id}?_bookings=true`, false);
 
     if(loading){
         return(
