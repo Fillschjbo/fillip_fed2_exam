@@ -35,7 +35,7 @@ export function useAuth(){
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch("https://v2.api.noroff.dev/auth/login", {
+            const response = await fetch("https://v2.api.noroff.dev/auth/login?_holidaze=true", {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json",
@@ -47,13 +47,16 @@ export function useAuth(){
             }
             const result = await response.json();
             setData(result);
+
             const user = {
                 name: result.data.name,
                 avatar: result.data.avatar.url,
             }
 
             localStorage.setItem("user", JSON.stringify(user));
-            localStorage.setItem("token", result.data.accessToken)
+            localStorage.setItem("token", result.data.accessToken);
+            localStorage.setItem("venueManager", result.data.venueManager);
+
             return result;
         }catch(err){
             setError(err);
