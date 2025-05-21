@@ -26,7 +26,6 @@ export function Featured(){
         <div className={"flex flex-col items-center w-screen bg-[#F5F5F7]"}>
             <title>Holidaze | Featured</title>
             <HeroBanner />
-            <Searchbar />
             <div className={"flex flex-wrap gap-x-3 gap-y-5 w-screen justify-center"}>
                 {venues.map((venue) => (
                     <Link to={`/venue/${venue.id}`} key={venue.id}>
