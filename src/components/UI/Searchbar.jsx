@@ -31,7 +31,7 @@ export function Searchbar(){
         const startDateStr = formatDate(startDate)
         const endDateStr = formatDate(endDate)
 
-        navigate(`/results?q=${encodeURIComponent(query)}&start=${startDateStr}&end=${endDateStr}`);
+        navigate(`/results?q=${encodeURIComponent(query)}&start=${startDateStr || ""}&end=${endDateStr || ""}`);
     }
 
     return(
