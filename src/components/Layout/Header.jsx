@@ -30,7 +30,7 @@ export function Header() {
     }, [isDropdownOpen]);
 
     return(
-        <div className={"w-screen h-[80px] flex items-center px-[8vw] z-10"}>
+        <div className={"w-screen h-[80px] flex items-center px-[8vw] z-30 sticky top-0"}>
             <div className={"w-full flex justify-between items-center"}>
                 <div></div>
                 <div className={"flex h-full font-serif md:text-[45px] text-3xl gap-[64px] items-center pl-[10vw]"}>

@@ -35,8 +35,8 @@ export function Searchbar(){
     }
 
     return(
-        <>
-            <form onSubmit={handleSubmit}>
+        <div className={"relative z-10"}>
+            <form onSubmit={handleSubmit} className={"flex"}>
                 <div>
                     <label htmlFor="query">Search Venues</label>
                     <input type="text" id={query} value={query}
@@ -72,6 +72,6 @@ export function Searchbar(){
 
                 <button type={"submit"}>Search</button>
             </form>
-        </>
+        </div>
     )
 }
