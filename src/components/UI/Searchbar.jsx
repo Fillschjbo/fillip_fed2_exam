@@ -36,41 +36,43 @@ export function Searchbar(){
 
     return(
         <div className={"relative z-10"}>
-            <form onSubmit={handleSubmit} className={"flex"}>
+            <form onSubmit={handleSubmit} className={"flex bg-[#F0EEFB] px-8 py-8 rounded-full border border-gray-400"}>
                 <div>
-                    <label htmlFor="query">Search Venues</label>
+                    <label htmlFor="query"></label>
                     <input type="text" id={query} value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder={"Location"}
+                    placeholder={"Search location"}
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="startDate">Start Date</label>
+                    <label htmlFor="startDate"></label>
                     <DatePicker
                         id="startDate"
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
                         dateFormat={"yyyy-MM-dd"}
                         placeholderText={"Select start date"}
+                        autoComplete="off"
                         required
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="endDate">End Date</label>
+                    <label htmlFor="endDate"></label>
                     <DatePicker
                         id="startDate"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         dateFormat={"yyyy-MM-dd"}
                         placeholderText={"Select end date"}
+                        autoComplete="off"
                         required
                     />
                 </div>
                 {error && <p className={"text-red-500 text-sm"}>{error}</p>}
 
-                <button type={"submit"}>Search</button>
+                <button type={"submit"} className={"hover:cursor-pointer text-[#543786]"}>Search</button>
             </form>
         </div>
     )
