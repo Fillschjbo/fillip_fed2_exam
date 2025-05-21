@@ -6,7 +6,7 @@ import {Searchbar} from "../../components/UI/Searchbar.jsx";
 
 
 export function Featured(){
-    const {data: venues, loading, error} = useFetch(API_VENUE, false);
+    const {data: venues, loading, error} = useFetch(`${API_VENUE}?sort=created&sortBy=ASC`, false);
 
     if(loading){
         return(
@@ -22,25 +22,27 @@ export function Featured(){
     }
 
     return (
-        <>
+        <div className={"flex flex-col items-center w-screen bg-[#F5F5F7]"}>
+            <title>Holidaze | Featured</title>
             <Searchbar />
-            {venues.map((venue) => (
-                <Link to={'/venue/' + venue.id} key={venue.id}>
-                    <VenueCard
-                        title={venue.name}
-                        // image={venue.media[0].url}
-                        city={venue.city}
-                        country={venue.country}
-                        price={venue.price}
-                        wifi={venue.meta.wifi}
-                        parking={venue.meta.parking}
-                        breakfast={venue.meta.breakfast}
-                        pets={venue.meta.pets}
-                        rating={venue.rating}
-                    />
-                </Link>
-
-            ))}
-        </>
+            <div className={"flex flex-wrap gap-x-3 gap-y-5 w-screen justify-center"}>
+                {venues.map((venue) => (
+                    <Link to={`/venue/${venue.id}`} key={venue.id}>
+                        <VenueCard
+                            title={venue.name}
+                            image={venue.media[0]?.url}
+                            city={venue.location?.city || "Unknown City"}
+                            country={venue.location?.country || "Unknown Country"}
+                            price={venue.price || 0}
+                            wifi={venue.meta?.wifi || false}
+                            parking={venue.meta?.parking || false}
+                            breakfast={venue.meta?.breakfast || false}
+                            pets={venue.meta?.pets || false}
+                            rating={venue.rating || 0}
+                        />
+                    </Link>
+                ))}
+            </div>
+        </div>
     );
 }
