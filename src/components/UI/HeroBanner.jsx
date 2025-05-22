@@ -54,14 +54,16 @@ export function HeroBanner() {
     }, [targetPosition, scaleFactor]);
 
     return (
-        <div className="h-screen w-screen flex flex-col items-center pt-45 gap-y-20 overflow-hidden">
-            <img
-                id="hero-image"
-                className="absolute top-1/2 left-1/2 w-full h-full object-cover z-0 -translate-x-1/2 -translate-y-1/2"
-                src="/herobanner/hero_image.jpg"
-                alt="herobanner image"
-            />
-            <h1 className="relative z-10 font-serif text-[7vw] tracking-wide">Your vacation starts with</h1>
+        <div className="h-screen w-screen flex flex-col items-center pt-45 gap-y-20 overflow-hidden bg-transparent">
+            <div className="absolute inset-0 overflow-hidden">
+                <img
+                    id="hero-image"
+                    className="absolute top-1/2 left-1/2 w-full h-full object-cover z-0 -translate-x-1/2 -translate-y-1/2"
+                    src="/herobanner/hero_image.jpg"
+                    alt="herobanner image"
+                />
+            </div>
+            <h1 className="relative z-10 font-serif text-[7vw] tracking-wide text-black">Your vacation starts with</h1>
             <img src={logo} alt="Holidaze logo" className="relative z-10 w-[20vw]" />
             <Searchbar />
         </div>

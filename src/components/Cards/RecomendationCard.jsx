@@ -1,5 +1,8 @@
 import {Link} from "react-router-dom";
-import {API_VENUE} from "../../utilities/constants.js";
+import { Navigation } from 'swiper/modules';
+import {Swiper, SwiperSlide} from "swiper/react";
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 export function RecommendationCard() {
     const recommendations = [
@@ -26,28 +29,61 @@ export function RecommendationCard() {
     ]
 
     return(
-        <div className="w-screen">
-            <div className="ml-[7vw] xl:mx-auto xl:max-w-[1300px]">
-                <div className="flex flex-col">
-                    <h2 className="text-2xl font-sans font-bold tracking-wide mb-4">Find Your New Favorite Place</h2>
-                    <div className="flex overflow-x-auto gap-4 pb-4 xl:justify-center">
-                        {recommendations.map((recommendation) => (
-                            <Link key={recommendation.city} to={`/results?q=${recommendation.city}`}>
-                                <div className="min-w-[310px]">
-                                    <div className="flex flex-col gap-4 bg-[#F0EEFB] rounded-[20px] pb-10 mb-8">
-                                        <img
-                                            src={recommendation.img}
-                                            alt="city image"
-                                            className="w-[310px] h-[265px] rounded-t-[20px] object-cover"
-                                        />
-                                        <p className="font-sans font-bold ml-2">{recommendation.city}, {recommendation.country}</p>
-                                    </div>
+        <div className="max-w-[70vw] mx-auto p-5 relative">
+            <h2 className="text-2xl font-sans font-bold tracking-wide mb-4">Find Your New Favorite Place</h2>
+            <Swiper
+                modules={[Navigation]}
+                spaceBetween={20}
+                slidesPerView={1}
+                navigation={{
+                    nextEl: '.swiper-recommendation-next',
+                    prevEl: '.swiper-recommendation-prev',
+                }}
+                breakpoints={{
+                    640: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1440: { slidesPerView: 4 },
+                }}
+                className="py-5"
+                onSwiper={() => console.log('RecommendationCard Swiper initialized')}
+            >
+                {recommendations.map((recommendation) => (
+                    <SwiperSlide key={recommendation.city} className="flex justify-center">
+                        <Link to={`/results?q=${recommendation.city}`}>
+                            <div className="bg-[#F0EEFB] rounded-lg shadow-lg overflow-hidden flex flex-col h-[300px] hover:cursor-pointer">
+                                <img
+                                    src={recommendation.img}
+                                    alt={`${recommendation.city} image`}
+                                    className="w-full h-48 object-cover"
+                                />
+                                <div className="p-4 flex flex-col flex-1 justify-between">
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                                        {recommendation.city}, {recommendation.country}
+                                    </h3>
                                 </div>
-                            </Link>
-                        ))}
-                    </div>
+                            </div>
+                        </Link>
+                    </SwiperSlide>
+                ))}
+
+                <div
+                    className="swiper-recommendation-prev absolute top-1/2 left-0 -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 cursor-pointer after:hidden"
+                    aria-label="Previous slide"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                    </svg>
                 </div>
-            </div>
+                <div
+                    className="swiper-recommendation-next absolute top-1/2 right-0 -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 cursor-pointer after:hidden"
+                    aria-label="Next slide"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </Swiper>
         </div>
-    )
+    );
 }
