@@ -1,6 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -24,8 +24,8 @@ export function FeaturedVenuesCarousel () {
                 spaceBetween={20}
                 slidesPerView={1}
                 navigation={{
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
+                    nextEl: '.swiper-venues-next',
+                    prevEl: '.swiper-venues-prev',
                 }}
                 breakpoints={{
                     640: { slidesPerView: 1 },
@@ -37,7 +37,7 @@ export function FeaturedVenuesCarousel () {
             >
                 {venues.map((venue) => (
                     <SwiperSlide key={venue.id} className="flex justify-center">
-                        <div className="bg-[#F0EEFB] rounded-lg shadow-lg overflow-hidden flex flex-col h-[400px] hover:cursor-pointer">
+                        <div className="bg-[#F0EEFB] rounded-[20px] overflow-hidden flex flex-col h-[400px] hover:cursor-pointer">
                             <img
                                 src={venue.media?.[0]?.url || 'https://via.placeholder.com/300'}
                                 alt={venue.name}
@@ -57,7 +57,7 @@ export function FeaturedVenuesCarousel () {
                 ))}
 
                 <div
-                    className="swiper-recommendation-prev absolute top-1/2 left-0 -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 cursor-pointer after:hidden"
+                    className="swiper-venues-prev absolute top-1/2 left-0 -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 cursor-pointer after:hidden"
                     aria-label="Previous slide"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,7 +65,7 @@ export function FeaturedVenuesCarousel () {
                     </svg>
                 </div>
                 <div
-                    className="swiper-recommendation-next absolute top-1/2 right-0 -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 cursor-pointer after:hidden"
+                    className="swiper-venues-next absolute top-1/2 right-0 -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 cursor-pointer after:hidden"
                     aria-label="Next slide"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

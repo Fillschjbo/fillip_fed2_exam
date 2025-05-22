@@ -51,7 +51,7 @@ export function RecommendationCard() {
                 {recommendations.map((recommendation) => (
                     <SwiperSlide key={recommendation.city} className="flex justify-center">
                         <Link to={`/results?q=${recommendation.city}`}>
-                            <div className="bg-[#F0EEFB] rounded-lg shadow-lg overflow-hidden flex flex-col h-[300px] hover:cursor-pointer">
+                            <div className="bg-[#F0EEFB] rounded-[20px] overflow-hidden flex flex-col h-[300px] hover:cursor-pointer">
                                 <img
                                     src={recommendation.img}
                                     alt={`${recommendation.city} image`}
