@@ -5,6 +5,7 @@ import {API_VENUE} from "../../utilities/constants.js";
 import {Searchbar} from "../../components/UI/Searchbar.jsx";
 import {HeroBanner} from "../../components/UI/HeroBanner.jsx";
 import {RecommendationCard} from "../../components/Cards/RecomendationCard.jsx";
+import {FeaturedVenuesCarousel} from "../../components/UI/FeaturedVenuesCarousel.jsx";
 
 
 export function Featured(){
@@ -28,6 +29,7 @@ export function Featured(){
             <title>Holidaze | Featured</title>
             <HeroBanner />
             <RecommendationCard />
+            <FeaturedVenuesCarousel />
             <div className={"flex flex-wrap gap-x-3 gap-y-5 w-screen justify-center"}>
                 {venues.map((venue) => (
                     <Link to={`/venue/${venue.id}`} key={venue.id}>
