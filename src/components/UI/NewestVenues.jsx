@@ -6,13 +6,13 @@ import React from "react";
 import {VenueCard} from "../Cards/VenueCard.jsx";
 import {Link} from "react-router-dom";
 
-export function NewestVenues () {
-    const { data, loading, error } = useFetch(`${API_VENUE}?limit=4&sort=created&sortBy=ASC`, true);
+export function NewestVenues () {const { data, loading, error } = useFetch(`${API_VENUE}?limit=4&sort=created&sortBy=ASC`, false);
     const venues = data|| [];
 
     if (loading) return <div className="text-center text-gray-600">Loading venues...</div>;
     if (error) return <div className="text-center text-red-500">Error loading venues: {error.message}</div>;
     if (venues.length === 0) return <div className="text-center text-gray-600">No venues found.</div>;
+
 
     return (
         <div className="max-w-[70vw] mx-auto p-5">

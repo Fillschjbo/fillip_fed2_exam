@@ -1,15 +1,13 @@
-import {useSearchParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {API_VENUE} from "../../utilities/constants.js";
+import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export function useSearch() {
+export function useSearch(apiUrl) {
     const [searchParams] = useSearchParams();
-    const query = searchParams.get("q") || "";
     const startDate = searchParams.get("start");
     const endDate = searchParams.get("end");
 
     const [data, setData] = useState(null);
-    const [loading ,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -17,10 +15,10 @@ export function useSearch() {
             setLoading(true);
             setError(null);
 
-            const fetchUrl = query ? `${API_VENUE}/search?q=${encodeURIComponent(query)}&_bookings=true` : `${API_VENUE}`;
+            console.log("useSearch.jsx - Fetching URL:", apiUrl);
 
             try {
-                const response = await fetch(fetchUrl);
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
                     throw new Error(`${response.status}`);
                 }
@@ -29,34 +27,40 @@ export function useSearch() {
                 let venues = result.data || [];
 
                 const areDatesValid =
-                    startDate && endDate &&
+                    startDate &&
+                    endDate &&
                     !isNaN(new Date(startDate).getTime()) &&
                     !isNaN(new Date(endDate).getTime()) &&
                     new Date(endDate) > new Date(startDate);
 
-                if (areDatesValid){
+                if (areDatesValid) {
                     const start = new Date(startDate);
                     const end = new Date(endDate);
 
                     venues = venues.filter((venue) => {
+                        // Check if bookings exist and is an array; if not, assume no bookings
+                        if (!Array.isArray(venue.bookings)) {
+                            return true; // Venue has no bookings, so it's available
+                        }
                         return !venue.bookings.some((booking) => {
                             const bookingStart = new Date(booking.dateFrom);
                             const bookingEnd = new Date(booking.dateTo);
                             return bookingStart <= end && bookingEnd >= start;
-                        })
-                    })
+                        });
+                    });
                 }
 
                 setData(venues);
-            }catch (err){
+            } catch (err) {
                 setError(err.message);
                 setData(null);
-            }finally {
-                setLoading(false)
+            } finally {
+                setLoading(false);
             }
-        }
-        fetchData();
-    }, [query, startDate, endDate]);
+        };
 
-    return {data, loading, error}
+        fetchData();
+    }, [apiUrl, startDate, endDate]);
+
+    return { data, loading, error };
 }

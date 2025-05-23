@@ -35,7 +35,7 @@ export function Searchbar(){
     }
 
     return(
-        <div className={"relative z-10"}>
+        <div className={"relative z-10 w-fit"}>
             <form onSubmit={handleSubmit} className={"flex bg-[#F0EEFB] px-8 py-8 rounded-full border border-gray-400"}>
                 <div>
                     <label htmlFor="query"></label>
