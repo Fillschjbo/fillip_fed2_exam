@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Filter } from "../../components/UI/Filter.jsx";
 import { useSearch } from "../../hooks/api/useSearch.jsx";
 import { API_VENUE } from "../../utilities/constants.js";
-import { useState, useCallback } from "react";
+import {useState, useCallback, useEffect} from "react";
 import {SearchResultCard} from "../../components/Cards/SearchResultCard.jsx";
 
 function VenueList({ apiUrl, localFilterFunction }) {
@@ -62,8 +62,13 @@ export function SearchResults() {
         setLocalFilterFunction(() => filterFunction);
     }, []);
 
+    useEffect(() => {
+        document.title = `Search Results for: ${query}`;
+    }, [query]);
+
     return (
         <div className="max-w-6xl mx-auto p-4">
+            <title>Search Results for: {query}</title>
             <h1 className="text-2xl font-bold mb-4">Search Results</h1>
             <Filter
                 baseUrl={baseUrl}
