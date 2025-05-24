@@ -4,6 +4,7 @@ import { Filter } from "../../components/UI/Filter.jsx";
 import { useSearch } from "../../hooks/api/useSearch.jsx";
 import { API_VENUE } from "../../utilities/constants.js";
 import { useState, useCallback } from "react";
+import {SearchResultCard} from "../../components/Cards/SearchResultCard.jsx";
 
 function VenueList({ apiUrl, localFilterFunction }) {
     const { data: venues, loading, error } = useSearch(apiUrl);
@@ -27,34 +28,18 @@ function VenueList({ apiUrl, localFilterFunction }) {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="w-[90vw] lg:w-[70vw] p-5 mx-auto flex flex-col gap-[20px]">
             {displayedVenues.map((venue) => (
-                <div
-                    key={venue.id}
-                    className="border rounded-lg overflow-hidden shadow-md"
-                >
-                    {venue.media && venue.media.length > 0 && (
-                        <img
-                            src={venue.media[0].url}
-                            alt={venue.media[0].alt || venue.name}
-                            className="w-full h-48 object-cover"
-                        />
-                    )}
-                    <div className="p-4">
-                        <h2 className="text-xl font-semibold">{venue.name}</h2>
-                        <p className="text-gray-600 mt-2">{venue.description}</p>
-                        <p className="text-gray-800 font-medium mt-2">Price: ${venue.price}</p>
-                        <p className="text-gray-600 mt-1">
-                            Location: {venue.location.city}, {venue.location.country}
-                        </p>
-                        <Link
-                            to={`/venue/${venue.id}`}
-                            className="mt-4 inline-block bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-                        >
-                            View Details
-                        </Link>
-                    </div>
-                </div>
+                <Link to={`/venue/${venue.id}`} key={venue.id}>
+                    <SearchResultCard
+                        city={venue.location?.city || "Unknown City"}
+                        country={venue.location?.country || "Unknown Country"}
+                        name={venue.name}
+                        price={venue.price}
+                        image={venue.media?.[0]?.url}
+                    />
+                </Link>
+
             ))}
         </div>
     );
