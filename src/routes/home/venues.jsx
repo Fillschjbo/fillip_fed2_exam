@@ -9,34 +9,23 @@ import { Filter } from '../../components/UI/Filter.jsx';
 function VenueList({ venues, loading, error, onLoadMore, hasMore, loadingMore }) {
     const loadMoreRef = useRef(null);
 
-    // Intersection Observer for infinite scroll
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 const target = entries[0];
-                console.log('Intersection observed:', {
-                    isIntersecting: target.isIntersecting,
-                    hasMore,
-                    loadingMore,
-                    loading
-                });
                 if (target.isIntersecting && hasMore && !loadingMore && !loading) {
-                    console.log('Triggering load more');
                     onLoadMore();
                 }
             },
             {
                 threshold: 0.1,
-                rootMargin: '100px', // Start loading 100px before reaching the bottom
+                rootMargin: '100px',
             }
         );
 
         const currentRef = loadMoreRef.current;
         if (currentRef) {
             observer.observe(currentRef);
-            console.log('Observer attached to element');
-        } else {
-            console.log('Load more ref not available');
         }
 
         return () => {
@@ -82,7 +71,6 @@ function VenueList({ venues, loading, error, onLoadMore, hasMore, loadingMore })
                 ))}
             </div>
 
-            {/* Loading indicator and scroll trigger */}
             <div ref={loadMoreRef} className="flex justify-center py-8 min-h-[100px] bg-gray-50">
                 {loadingMore && (
                     <div className="text-center text-gray-600">Loading more venues...</div>
@@ -111,46 +99,36 @@ export function Venues() {
     const [hasMore, setHasMore] = useState(true);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-    // Construct current API URL with page
     const currentApiUrl = `${baseApiUrl}&page=${currentPage}`;
     const { data, loading, error } = useFetch(currentApiUrl, false);
 
-    // Handle new data from API
     useEffect(() => {
         if (data && Array.isArray(data)) {
             if (isInitialLoad || currentPage === 1) {
-                // First load or reset - replace all venues
                 setAllVenues(data);
                 setIsInitialLoad(false);
             } else {
-                // Additional load - append new venues
                 setAllVenues(prevVenues => {
-                    // Avoid duplicates by checking if venues already exist
                     const existingIds = new Set(prevVenues.map(v => v.id));
                     const newVenues = data.filter(venue => !existingIds.has(venue.id));
                     return [...prevVenues, ...newVenues];
                 });
             }
 
-            // Check if we've reached the end - if we get fewer than 100 venues OR no new venues
             if (data.length < 100 || data.length === 0) {
                 setHasMore(false);
             }
 
-            // Always set loadingMore to false when we receive data
             setLoadingMore(false);
         }
     }, [data, currentPage, isInitialLoad]);
 
-    // Handle errors and loading states
     useEffect(() => {
         if (error) {
             setLoadingMore(false);
-            setHasMore(false); // Stop trying to load more on error
         }
     }, [error]);
 
-    // Reset loadingMore when loading completes (success or failure)
     useEffect(() => {
         if (!loading && loadingMore) {
             setLoadingMore(false);
@@ -158,7 +136,6 @@ export function Venues() {
     }, [loading, loadingMore]);
 
     const handleUrlChange = useCallback((newUrl) => {
-        // Reset everything when URL changes (e.g., from search or filter)
         setBaseApiUrl(newUrl);
         setCurrentPage(1);
         setAllVenues([]);
@@ -171,29 +148,18 @@ export function Venues() {
     }, []);
 
     const loadMoreVenues = useCallback(() => {
-        console.log('loadMoreVenues called with conditions:', {
-            loadingMore,
-            hasMore,
-            loading,
-            currentPage,
-            allVenuesLength: allVenues.length
-        });
 
         if (loadingMore || !hasMore || loading) {
-            console.log('Load more blocked:', { loadingMore, hasMore, loading });
             return;
         }
 
-        console.log('Loading more venues...', { currentPage, hasMore, loadingMore });
         setLoadingMore(true);
         setCurrentPage(prevPage => {
             const newPage = prevPage + 1;
-            console.log('Setting new page:', newPage);
             return newPage;
         });
     }, [loadingMore, hasMore, loading, currentPage, allVenues.length]);
 
-    // Apply local filters to all venues
     const filteredVenues = localFilterFunction ? localFilterFunction(allVenues) : allVenues;
 
     return (
