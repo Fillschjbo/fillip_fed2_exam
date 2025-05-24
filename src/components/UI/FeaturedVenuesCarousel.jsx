@@ -9,7 +9,7 @@ import {API_PROFILE} from "../../utilities/constants.js";
 
 
 export function FeaturedVenuesCarousel () {
-    const { data, loading, error } = useFetch(`${API_PROFILE}/venuemanagertest?_venues=true`, true);
+    const { data, loading, error } = useFetch(`${API_PROFILE}/venuemanagertest?_venues=true`, false);
     const venues = data?.venues || [];
 
     if (loading) return <div className="text-center text-gray-600">Loading venues...</div>;

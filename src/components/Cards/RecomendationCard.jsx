@@ -46,7 +46,6 @@ export function RecommendationCard() {
                     1440: { slidesPerView: 4 },
                 }}
                 className="py-5"
-                onSwiper={() => console.log('RecommendationCard Swiper initialized')}
             >
                 {recommendations.map((recommendation) => (
                     <SwiperSlide key={recommendation.city} className="flex justify-center">

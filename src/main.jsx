@@ -19,13 +19,13 @@ import {Featured,
 import "react-datepicker/dist/react-datepicker.css";
 
 const Layout = () => (
-    <>
+    <div className={"bg-[#F5F5F7]"}>
         <Header />
         <main>
             <Outlet />
         </main>
         <Footer/>
-    </>
+    </div>
 )
 
 const router = createBrowserRouter([
