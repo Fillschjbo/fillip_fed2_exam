@@ -20,7 +20,7 @@ export function useFilter(initialFilters = {
 
         const newParams = new URLSearchParams();
 
-        newParams.set("limit", "24");
+        newParams.set("limit", "100");
         newParams.set("sort", "created");
         newParams.set("sortOrder", "asc");
 

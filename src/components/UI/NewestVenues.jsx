@@ -6,7 +6,7 @@ import React from "react";
 import {VenueCard} from "../Cards/VenueCard.jsx";
 import {Link} from "react-router-dom";
 
-export function NewestVenues () {const { data, loading, error } = useFetch(`${API_VENUE}?limit=4&sort=created&sortBy=ASC`, false);
+export function NewestVenues () {const { data, loading, error } = useFetch(`${API_VENUE}?limit=4&sort=created&sortOrder=desc`, false);
     const venues = data|| [];
 
     if (loading) return <div className="text-center text-gray-600">Loading venues...</div>;
