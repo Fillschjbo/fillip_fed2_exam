@@ -1,15 +1,35 @@
 import {useFetch} from "../../hooks/api/useFetch.jsx";
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams, useNavigate} from "react-router-dom";
 import {API_VENUE} from "../../utilities/constants.js";
 import {BookingComponent} from "../../components/UI/Booking.jsx";
 import {useEffect} from "react";
 import {ImageCarousel} from "../../components/UI/ImageCarousel.jsx";
 import {LuCircleParking, LuCircleParkingOff, LuWifi, LuWifiOff} from "react-icons/lu";
-import {TbBread, TbBreadOff, TbPaw, TbPawOff} from "react-icons/tb";
+import {TbBread, TbBreadOff, TbPaw, TbPawOff, TbPencil, TbTrash} from "react-icons/tb";
+import {useDelete} from "../../hooks/api/useDelete.jsx";
 
 export function Venue(){
     const {id} = useParams()
-    const {data: venues, loading, error} = useFetch(`${API_VENUE}/${id}?_bookings=true`, false);
+    const navigate = useNavigate();
+    const {data: venues, loading, error} = useFetch(`${API_VENUE}/${id}?_bookings=true&_owner=true`, false);
+    const { deleteData, data: deleteDataResponse, loading: deleteLoading, error: deleteError } = useDelete();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const handleDeleteVenue = async () => {
+        if (!window.confirm(`Are you sure you want to delete "${venues.name}"? This action cannot be undone and will delete all bookings for this venue.`)) {
+            return;
+        }
+
+        try {
+            await deleteData(`${API_VENUE}/${id}`);
+            alert("Venue deleted successfully");
+            navigate("/");
+        } catch (err) {
+            console.error("Venue delete error:", err);
+            alert(`Failed to delete venue: ${err.message}`);
+        }
+    };
 
     useEffect(() => {
         if (loading || error || !venues || !venues.name) {
@@ -38,6 +58,27 @@ export function Venue(){
                 <ImageCarousel
                     media={venues.media}
                 />
+                {venues.owner.name === user.name ? (
+                    <div className={"w-full flex gap-2 justify-end"}>
+                        <Link to={`/venue/edit/${venues.id}`}>
+                            <button className={"py-2 px-4 border border-gray-300 rounded-[10px] flex gap-2 items-center hover:cursor-pointer"}>
+                                <TbPencil />
+                                Edit
+                            </button>
+                        </Link>
+
+                        <button
+                            onClick={handleDeleteVenue}
+                            disabled={deleteLoading}
+                            className={`py-2 px-4 bg-red-500 text-white rounded-[10px] flex gap-2 items-center ${deleteLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-red-600 cursor-pointer"}`}
+                            aria-label={`Delete venue ${venues.name}`}
+                        >
+                            <TbTrash />
+                            {deleteLoading ? "Deleting..." : "Delete"}
+                        </button>
+                    </div>
+                    )
+                    :("")}
                 <p className={"md:flex hidden font sans text-1rem tracking-wide pt-8"}>{venues.description}</p>
             </div>
             <div>
