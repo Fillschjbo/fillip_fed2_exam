@@ -25,6 +25,7 @@ export function Login() {
 
     return (
         <div className={"flex h-screen"}>
+            <title>Holidaze | Login</title>
             <div className={"hidden md:flex flex-col justify-between h-full py-[10vh] px-[5%] w-[40%] bg-[#EBE7FE] absolute top-0"}>
                 <img src={logo} alt="logo" className={"size-50"}/>
                 <h2 className={"text-[24px] font-sans font-bold tracking-wide w-[321px]"}>Start your vacation with Holidaze</h2>

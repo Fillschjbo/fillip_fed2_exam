@@ -49,7 +49,7 @@ function VenueList({ venues, loading, error, onLoadMore, hasMore, loadingMore })
 
     return (
         <div>
-            <title>Holidaze || Venues</title>
+            <title>Holidaze | Venues</title>
             <div className="flex flex-wrap lg:justify-between justify-center gap-4">
                 {venues.map((venue) => (
                     <div key={venue.id} className="w-[310px]">
