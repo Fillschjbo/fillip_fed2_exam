@@ -10,7 +10,7 @@ export function VenueCard ({title, image, rating, city, country, wifi, parking, 
                 />
             </div>
             <p className={"absolute right-3 top-3 bg-[#EBE7FE] px-5 py-1 rounded-lg font-sans"}>{rating}</p>
-            <p className={"text-xs"}>{city}, {country}</p>
+            <p className={"text-xs truncate"}>{city}, {country}</p>
             <h2 className={"font-sans font-bold text-lg truncate"}>{title}</h2>
             <div>
                 <ul className={"flex gap-3"}>
