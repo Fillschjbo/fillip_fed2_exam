@@ -38,11 +38,11 @@ export function Venue(){
                 <ImageCarousel
                     media={venues.media}
                 />
-                <p className={"md:flex hidden font sans text-[11px] tracking-wide pt-8"}>{venues.description}</p>
+                <p className={"md:flex hidden font sans text-1rem tracking-wide pt-8"}>{venues.description}</p>
             </div>
             <div>
                 <h2 className={"font-sans text-[45px] font-bold tracking-wide"}>{venues.name}</h2>
-                <p className={"md:hidden font sans text-[px] tracking-wide pt-8"}>{venues.description}</p>
+                <p className={"md:hidden font-sans tracking-wide pt-8"}>{venues.description}</p>
                 <p
                     className={"text-1rem font-sans tracking-wide"}
                 >{venues.location?.city || "Unknown City" }, {venues.location?.country || "Unknown Country" }</p>
