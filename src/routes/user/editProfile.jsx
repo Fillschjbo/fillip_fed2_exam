@@ -4,6 +4,7 @@ import { useFetch } from "../../hooks/api/useFetch.jsx";
 import { useEdit } from "../../hooks/api/useEdit.jsx";
 import { API_PROFILE } from "../../utilities/constants.js";
 import { TbCamera, TbArrowLeft } from "react-icons/tb";
+import {toast} from "react-hot-toast";
 
 export function EditProfile() {
     const { name } = useParams();
@@ -31,10 +32,6 @@ export function EditProfile() {
                 avatar: {
                     url: profile.avatar?.url || "",
                     alt: profile.avatar?.alt || ""
-                },
-                banner: {
-                    url: profile.banner?.url || "",
-                    alt: profile.banner?.alt || ""
                 },
                 venueManager: profile.venueManager || false
             });
@@ -65,12 +62,7 @@ export function EditProfile() {
         e.preventDefault();
 
         if (formData.avatar.url && !isValidUrl(formData.avatar.url)) {
-            alert("Please enter a valid avatar URL");
-            return;
-        }
-
-        if (formData.banner.url && !isValidUrl(formData.banner.url)) {
-            alert("Please enter a valid banner URL");
+            toast.error("Please enter a valid avatar URL");
             return;
         }
 
@@ -123,7 +115,7 @@ export function EditProfile() {
 
     useEffect(() => {
         if (editData) {
-            alert("Profile updated successfully!");
+            toast.success("Profile updated successfully!");
             navigate(`/profile/${name}`);
         }
     }, [editData, navigate, name]);

@@ -2,6 +2,7 @@ import {useAuth} from "../../hooks/api/useAuth.jsx";
 import {useForm} from "react-hook-form";
 import logo from "../../assets/logo/holidaze.svg";
 import {Link} from "react-router-dom";
+import {toast} from "react-hot-toast";
 
 export function Login() {
     const { login, loading, error } = useAuth();
@@ -15,10 +16,10 @@ export function Login() {
     const onSubmit = async (data) => {
         try {
             await login(data);
-            alert("Login successful!");
+            toast.success("Login successful!");
             window.location.href = "/"
         } catch (err) {
-            console.error("Login failed:", err);
+            toast.error("Login failed:", err);
         }
     };
 

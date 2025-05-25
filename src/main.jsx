@@ -15,9 +15,12 @@ import {Featured,
         Venue,
 } from "./routes/index.jsx";
 import "react-datepicker/dist/react-datepicker.css";
+import {Toaster} from "react-hot-toast";
+
 
 const Layout = () => (
     <div className={"bg-[#F5F5F7]"}>
+        <Toaster />
         <Header />
         <main>
             <Outlet />
