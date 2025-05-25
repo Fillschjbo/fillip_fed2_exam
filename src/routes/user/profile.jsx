@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {useDelete} from "../../hooks/api/useDelete.jsx";
+import {toast} from "react-hot-toast";
 
 export function Profile() {
     const { name } = useParams();
@@ -25,7 +26,7 @@ export function Profile() {
     const handleEditBooking = (booking) => {
         try {
             if (!booking || !booking.dateFrom || !booking.dateTo) {
-                alert("Cannot edit booking: Invalid booking data");
+                toast.error("Cannot edit booking: Invalid booking data");
                 return;
             }
 
@@ -37,7 +38,7 @@ export function Profile() {
             });
         } catch (err) {
             console.error("Error in handleEditBooking:", err);
-            alert("Failed to open edit modal: " + err.message);
+            toast.error("Failed to open edit modal: " + err.message);
         }
     };
 
@@ -53,11 +54,11 @@ export function Profile() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.dateFrom || !formData.dateTo) {
-            alert("Please select both check-in and check-out dates");
+            toast.error("Please select both check-in and check-out dates");
             return;
         }
         if (formData.dateTo <= formData.dateFrom) {
-            alert("Check-out date must be after check-in date");
+            toast.error("Check-out date must be after check-in date");
             return;
         }
         const payload = {
@@ -75,7 +76,7 @@ export function Profile() {
                 }
             }
         } catch (err) {
-            console.error("Error updating booking:", err);
+            toast.error("Error updating booking:", err);
         }
     };
 
@@ -110,7 +111,7 @@ export function Profile() {
             }
         } catch (err) {
             console.error("Delete error:", err);
-            alert(`Failed to delete booking: ${err.message}`);
+            toast.error(`Failed to delete booking: ${err.message}`);
         }
     };
 

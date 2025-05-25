@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import {useAuth} from "../../hooks/api/useAuth.jsx";
 import logo from "/src/assets/logo/holidaze.svg"
 import {Link} from "react-router-dom";
+import {toast} from "react-hot-toast";
 
 export function Register() {
     const { register: authRegister, loading, error } = useAuth();
@@ -34,9 +35,9 @@ export function Register() {
             };
             await authRegister(payload);
             window.location.href = "/login"
-            alert("Registration successful!");
+            toast.success("Registration successful!");
         } catch (err) {
-            console.error("Registration failed:", err);
+            toast.error("Registration failed:", err);
         }
     };
 
