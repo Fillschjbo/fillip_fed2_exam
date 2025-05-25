@@ -21,10 +21,8 @@ export function Profile() {
     });
 
     const handleEditBooking = (booking) => {
-        console.log("handleEditBooking called with:", booking); // Debug log
         try {
             if (!booking || !booking.dateFrom || !booking.dateTo) {
-                console.error("Invalid booking data:", booking);
                 alert("Cannot edit booking: Invalid booking data");
                 return;
             }
@@ -35,7 +33,6 @@ export function Profile() {
                 dateTo: new Date(booking.dateTo),
                 guests: booking.guests || 1,
             });
-            console.log("Modal should open now. Selected booking:", booking);
         } catch (err) {
             console.error("Error in handleEditBooking:", err);
             alert("Failed to open edit modal: " + err.message);
@@ -97,7 +94,7 @@ export function Profile() {
                     <img
                         src={profile.avatar.url}
                         alt="profile avatar"
-                        className={"md:size-50 size-15 rounded-full"}
+                        className={"md:size-50 size-15 rounded-full object-cover"}
                     />
                 </div>
                 <div className={"h-full w-[70%] flex flex-col justify-center gap-6"}>
@@ -109,10 +106,12 @@ export function Profile() {
                         <p className={"text-[16px] font-sans font-normal tracking-wide"}>Not a venue manager. Edit profile to become venue manager.</p>
                     )}
                 </div>
-                <button className={"py-2 px-4 border border-gray-300 absolute top-4 right-4 rounded-[10px] flex gap-2 items-center"}>
-                    <TbPencil />
-                    Edit
-                </button>
+                <Link to={`/profile/edit/${name}`}>
+                    <button className={"py-2 px-4 border border-gray-300 absolute top-4 right-4 rounded-[10px] flex gap-2 items-center"}>
+                        <TbPencil />
+                        Edit
+                    </button>
+                </Link>
             </div>
 
             <div className={"w-full flex justify-center pt-20"}>
@@ -161,9 +160,8 @@ export function Profile() {
                         ) : (
                             profile.venues && profile.venues.length > 0 ? (
                                 profile.venues.map((venue) => (
-                                    <Link to={`/venue/${venue.id}`}>
+                                    <Link to={`/venue/${venue.id}`}  key={venue.id}>
                                         <SearchResultCard
-                                            key={venue.id}
                                             city={venue.location?.city || "Unknown City"}
                                             country={venue.location?.country || "Unknown Country"}
                                             name={venue.name}
@@ -180,12 +178,10 @@ export function Profile() {
                 </div>
             </div>
 
-            {/* Modal */}
             {selectedBooking && (
                 <div
                     className="fixed inset-0 bg-gray-900/20 backdrop-blur-sm flex items-center justify-center z-50"
                     onClick={(e) => {
-                        // Close modal if clicking on backdrop
                         if (e.target === e.currentTarget) {
                             closeModal();
                         }
@@ -270,7 +266,7 @@ export function Profile() {
                                 <button
                                     type="submit"
                                     disabled={editLoading}
-                                    className={`px-4 py-2 bg-blue-500 text-white rounded-[10px] font-sans text-[16px] hover:bg-blue-600 ${editLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`px-4 py-2 bg-[#543786] text-white rounded-[10px] font-sans text-[16px] hover:bg-[#9D88C1] ${editLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     {editLoading ? "Saving..." : "Save"}
                                 </button>
