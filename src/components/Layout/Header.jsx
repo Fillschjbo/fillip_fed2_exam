@@ -31,16 +31,16 @@ export function Header() {
 
     return(
         <div className={"w-screen h-[80px] flex items-center px-[8vw] z-30 sticky top-0"}>
-            <div className={"w-full flex justify-between items-center"}>
+            <div className={"w-[80%] sm:w-full flex justify-between items-center"}>
                 <div></div>
-                <div className={"flex h-full font-serif md:text-[45px] text-3xl gap-[64px] items-center pl-[10vw]"}>
-                    <a href="/" className={"pt-[15px]"}>Featured</a>
-                    <a href="/" ><img src={holidaze} alt="holidaze logo" className={"h-[56px] min-w-[100px] max-w-[200px] w-[10vw]"}/></a>
-                    <a href="/venues" className={"pt-[15px]"}>Venues</a>
+                <div className={"flex h-full font-serif md:text-[45px] text-3xl gap-[64px] items-center md:pl-[10vw]"}>
+                    <a href="/" className={"pt-[15px] text-lg sm:text-5xl"}>Featured</a>
+                    <a href="/" ><img src={holidaze} alt="holidaze logo" className={"h-[56px] min-w-[80px] max-w-[200px] w-[10vw]"}/></a>
+                    <a href="/venues" className={"pt-[15px] text-lg sm:text-5xl"}>Venues</a>
                 </div>
 
                 {/* Desktop */}
-                <div className="items-center md:flex hidden relative">
+                <div className="items-center md:flex hidden relative hover:cursor-pointer">
                     {userIsLoggedIn ? (
                         <div className="flex items-center gap-8" onClick={openDropdown}>
                             <p className="font-serif text-[45px] pt-[15px] md:truncate sm:truncate ml-4">

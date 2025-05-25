@@ -10,11 +10,9 @@ import {Featured,
         SearchResults,
         EditProfile,
         Profile,
-        BookingSuccess,
         CreateVenue,
         EditVenue,
         Venue,
-        NotFound
 } from "./routes/index.jsx";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -73,16 +71,8 @@ const router = createBrowserRouter([
                 path: "/profile/edit/:name",
                 element: <EditProfile />
             },
-            {
-                path: "/success",
-                element: <BookingSuccess />
-            },
         ]
     },
-    {
-        path: '*',
-        element: <NotFound />
-    }
 ])
 
 createRoot(document.getElementById('root')).render(
