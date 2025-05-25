@@ -89,7 +89,7 @@ export function EditVenue() {
 
     return(
         <div className="max-w-lg mx-auto p-6">
-            <h2 className="text-2xl font-bold mb-6">Create a New Venue</h2>
+            <h2 className="text-2xl font-bold mb-6">Edit Venue</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
                     <label className="block text-sm font-medium mb-1">Name *</label>
