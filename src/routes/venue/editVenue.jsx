@@ -4,6 +4,7 @@ import {API_VENUE} from "../../utilities/constants.js";
 import {useEdit} from "../../hooks/api/useEdit.jsx";
 import {useFieldArray, useForm} from "react-hook-form";
 import {useEffect} from "react";
+import {LiaPlusSolid, LiaTrashAltSolid} from "react-icons/lia";
 
 export function EditVenue() {
     const { id } = useParams();
@@ -74,31 +75,41 @@ export function EditVenue() {
         await edit(`${API_VENUE}/${id}`, filteredData);
     };
 
+    useEffect(() => {
+        if (fetchLoading || fetchError || !venue || !venue.name) {
+            document.title = "Holidaze | Loading...";
+        } else {
+            document.title = `Holidaze | Edit ${venue.name}`;
+        }
+    }, [fetchLoading, fetchError, venue]);
+
     if (fetchLoading) return <div>Loading...</div>;
     if (fetchError) return <div>Error loading venue: {fetchError.message}</div>;
     if (!venue) return <div>Venue not found</div>;
 
     return(
         <div className="max-w-lg mx-auto p-6">
-            <h2 className="text-2xl font-bold mb-6">Edit Venue</h2>
+            <h2 className="text-2xl font-bold mb-6">Create a New Venue</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
-                    <label className="block text-sm font-medium mb-1">Name</label>
+                    <label className="block text-sm font-medium mb-1">Name *</label>
                     <input
-                        {...register("name")}
-                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        {...register("name", { required: "Name is required" })}
+                        className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Venue name"
                     />
+                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium mb-1">Description</label>
+                    <label className="block text-sm font-medium mb-1">Description *</label>
                     <textarea
-                        {...register("description")}
-                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        {...register("description", { required: "Description is required" })}
+                        className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Venue description"
                         rows="4"
                     />
+                    {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
                 </div>
 
                 <div>
@@ -107,29 +118,24 @@ export function EditVenue() {
                         <div key={field.id} className="flex space-x-2 mb-2">
                             <input
                                 {...register(`media.${index}.url`)}
-                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Image URL"
-                            />
-                            <input
-                                {...register(`media.${index}.alt`)}
-                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Alt text"
                             />
                             <button
                                 type="button"
                                 onClick={() => remove(index)}
-                                className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                className="p-2 bg-red-500 text-white rounded hover:bg-red-600 hover:cursor-pointer"
                             >
-                                Remove
+                                <LiaTrashAltSolid />
                             </button>
                         </div>
                     ))}
                     <button
                         type="button"
-                        onClick={() => append({ url: "", alt: "" })}
-                        className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        onClick={() => append({ url: "" })}
+                        className="p-2 bg-[#543786] text-white rounded-full hover:bg-[#9D88C1] hover:cursor-pointer"
                     >
-                        Add Media
+                        <LiaPlusSolid />
                     </button>
                 </div>
 
@@ -138,7 +144,7 @@ export function EditVenue() {
                     <input
                         type="number"
                         {...register("price", { valueAsNumber: true, min: 0 })}
-                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Price"
                     />
                     {errors.price && <p className="text-red-500 text-sm mt-1">Price must be a non-negative number</p>}
@@ -149,7 +155,7 @@ export function EditVenue() {
                     <input
                         type="number"
                         {...register("maxGuests", { valueAsNumber: true, min: 0 })}
-                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Max guests"
                     />
                     {errors.maxGuests && <p className="text-red-500 text-sm mt-1">Max guests must be a non-negative number</p>}
@@ -160,7 +166,7 @@ export function EditVenue() {
                     <input
                         type="number"
                         {...register("rating", { valueAsNumber: true, min: 0, max: 5 })}
-                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Rating (0-5)"
                     />
                     {errors.rating && <p className="text-red-500 text-sm mt-1">Rating must be between 0 and 5</p>}
@@ -193,40 +199,28 @@ export function EditVenue() {
                     <div className="space-y-2">
                         <input
                             {...register("location.address")}
-                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Address"
                         />
                         <input
                             {...register("location.city")}
-                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="City"
                         />
                         <input
                             {...register("location.zip")}
-                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Zip Code"
                         />
                         <input
                             {...register("location.country")}
-                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Country"
                         />
                         <input
                             {...register("location.continent")}
-                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Continent"
-                        />
-                        <input
-                            type="number"
-                            {...register("location.lat", { valueAsNumber: true })}
-                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Latitude"
-                        />
-                        <input
-                            type="number"
-                            {...register("location.lng", { valueAsNumber: true })}
-                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Longitude"
                         />
                     </div>
                 </div>
@@ -234,9 +228,9 @@ export function EditVenue() {
                 <button
                     type="submit"
                     disabled={editLoading}
-                    className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
+                    className="bg-[#543786] text-[24px] font-bold tracking-wide text-white py-[24px] rounded-[20px] w-full hover:bg-[#9D88C1] hover:cursor-pointer"
                 >
-                    {editLoading ? "Updating..." : "Update Venue"}
+                    {editLoading ? "Saving Changes..." : "Save Changes"}
                 </button>
 
                 {editError && <p className="text-red-500">{editError.message}</p>}
