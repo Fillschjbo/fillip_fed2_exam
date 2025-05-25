@@ -141,7 +141,6 @@ export function Venue(){
                         <h3 className="font-sans text-[24px] font-bold tracking-wide">Venue Bookings</h3>
                         {venues.bookings?.length > 0 ? (
                             venues.bookings.map((booking) => {
-                                console.log("Mapping booking:", booking); // Debug log
                                 return (
                                     <div key={booking.id} className="w-full flex flex-col items-between justify-center p-2 border border-gray-300 rounded-[10px]">
                                         <div className={"flex justify-between"}>
