@@ -33,6 +33,7 @@ export function Register() {
                 ...(data.venueManager && { venueManager: data.venueManager }),
             };
             await authRegister(payload);
+            window.location.href = "/login"
             alert("Registration successful!");
         } catch (err) {
             console.error("Registration failed:", err);
@@ -49,7 +50,7 @@ export function Register() {
             <div className={"w-screen md:w-[30%] mx-auto  p-5 md:p-0 flex-col flex md:absolute md:right-[10vw] h-full items-center justify-center"}>
                 <form onSubmit={handleSubmit(onSubmit)} className={"flex flex-col w-full justify-center gap-10"}>
 
-                    <h2 className={"w-full flex justify-center font-sans tracking-wide font-bold text-[24px]"}>Register</h2>
+                    <h2 className={"w-[90vw] md:w-[25vw] flex justify-center font-sans tracking-wide font-bold text-[24px]"}>Register</h2>
                     {error && <p style={{ color: "red" }}>{error.message}</p>}
 
                     <div>
@@ -121,7 +122,7 @@ export function Register() {
 
 
                     <button type="submit" disabled={loading}
-                        className={"bg-[#543786] text-[24px] font-bold tracking-wide text-white py-[24px] rounded-[20px] w-[90vw] md:w-[25vw]"}
+                        className={"bg-[#543786] text-[24px] font-bold tracking-wide text-white py-[24px] rounded-[20px] w-[90vw] md:w-[25vw] hover:cursor-pointer"}
                     >
                         {loading ? "Registering..." : "Register"}
                     </button>
