@@ -158,14 +158,14 @@ export function Profile() {
                 <div className={"flex flex-col"}>
                     <div className={"flex justify-between md:px-50 px-20 gap-10"}>
                         <h3
-                            className={`font-serif font-bold text-[45px] cursor-pointer ${activeView === "bookings" ? "underline" : ""}`}
+                            className={`font-serif font-bold text-[24px] md:text-[45px] cursor-pointer ${activeView === "bookings" ? "underline" : ""}`}
                             onClick={() => setActiveView("bookings")}
                         >
                             My Bookings
                         </h3>
                         {profile.venueManager && (
                             <h3
-                                className={`font-serif font-bold text-[45px] cursor-pointer ${activeView === "venues" ? "underline" : ""}`}
+                                className={`font-serif font-bold text-[24px] md:text-[45px] cursor-pointer ${activeView === "venues" ? "underline" : ""}`}
                                 onClick={() => setActiveView("venues")}
                             >
                                 My Venues
