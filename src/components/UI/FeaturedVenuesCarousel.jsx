@@ -6,6 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import {useFetch} from "../../hooks/api/useFetch.jsx";
 import {API_PROFILE, API_VENUE} from "../../utilities/constants.js";
+import {Link} from "react-router-dom";
 
 
 export function FeaturedVenuesCarousel () {
@@ -37,22 +38,24 @@ export function FeaturedVenuesCarousel () {
             >
                 {venues.map((venue) => (
                     <SwiperSlide key={venue.id} className="flex justify-center">
-                        <div className="bg-[#F0EEFB] rounded-[20px] overflow-hidden flex flex-col h-[400px] hover:cursor-pointer">
-                            <img
-                                src={venue.media?.[0]?.url || 'https://via.placeholder.com/300'}
-                                alt={venue.name}
-                                className="w-full h-48 object-cover"
-                            />
-                            <div className="p-4 flex flex-col flex-1 justify-between">
-                                <h3 className="text-xl font-semibold text-gray-800 mb-2">{venue.name}</h3>
-                                <p className="text-gray-600 text-sm mb-2">
-                                    {venue.description?.substring(0, 100) || 'No description available'}...
-                                </p>
-                                <p className="text-gray-500 text-xs">Location: {venue.location?.city || 'Unknown'}</p>
-                                <p className="text-gray-500 text-xs">Price: ${venue.price || 'N/A'}</p>
-                                <p className="text-gray-500 text-xs">Max Guests: {venue.maxGuests || 'N/A'}</p>
+                        <Link to={`/venue/${venue.id}`}>
+                            <div className="bg-[#F0EEFB] rounded-[20px] overflow-hidden flex flex-col h-[400px] hover:cursor-pointer">
+                                <img
+                                    src={venue.media?.[0]?.url || 'https://via.placeholder.com/300'}
+                                    alt={venue.name}
+                                    className="w-full h-48 object-cover"
+                                />
+                                <div className="p-4 flex flex-col flex-1 justify-between">
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-2">{venue.name}</h3>
+                                    <p className="text-gray-600 text-sm mb-2">
+                                        {venue.description?.substring(0, 100) || 'No description available'}...
+                                    </p>
+                                    <p className="text-gray-500 text-xs">Location: {venue.location?.city || 'Unknown'}</p>
+                                    <p className="text-gray-500 text-xs">Price: ${venue.price || 'N/A'}</p>
+                                    <p className="text-gray-500 text-xs">Max Guests: {venue.maxGuests || 'N/A'}</p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </SwiperSlide>
                 ))}
 

@@ -46,7 +46,7 @@ export function Filter({ baseUrl, onUrlChange, onFiltersChange }) {
     };
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div className="bg-white p-6 shadow-md mb-6 rounded-[20px]">
             <h2 className="text-lg font-semibold mb-4">Filter Venues</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>

@@ -243,7 +243,7 @@ export function EditProfile() {
                             name="venueManager"
                             checked={formData.venueManager}
                             onChange={handleInputChange}
-                            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 hover:cursor-pointer"
                         />
                         <label htmlFor="venueManager" className="text-[16px] font-sans font-medium">
                             Register as Venue Manager

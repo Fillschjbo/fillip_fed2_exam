@@ -146,7 +146,7 @@ export function Profile() {
                     )}
                 </div>
                 <Link to={`/profile/edit/${name}`}>
-                    <button className={"py-2 px-4 border border-gray-300 absolute top-4 right-4 rounded-[10px] flex gap-2 items-center"}>
+                    <button className={"py-2 px-4 border border-gray-300 absolute top-4 right-4 rounded-[10px] flex gap-2 items-center hover:cursor-pointer"}>
                         <TbPencil />
                         Edit
                     </button>
@@ -244,7 +244,7 @@ export function Profile() {
                             <button
                                 onClick={() => handleDeleteBooking(selectedBooking.id)}
                                 disabled={deleteLoading}
-                                className={`bg-red-500 text-white px-4 py-2 rounded-[10px] font-sans text-[16px] w-full ${deleteLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-red-600"}`}
+                                className={`bg-red-500 text-white px-4 py-2 rounded-[10px] font-sans text-[16px] w-full hover:cursor-pointer  ${deleteLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-red-600"}`}
                                 aria-label={`Delete booking for ${selectedBooking.venue?.name || "venue"}`}
                             >
                                 {deleteLoading ? "Deleting..." : "Delete Booking"}
@@ -314,14 +314,14 @@ export function Profile() {
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="px-4 py-2 bg-gray-300 rounded-[10px] font-sans text-[16px] hover:bg-gray-400"
+                                    className="px-4 py-2 bg-gray-300 rounded-[10px] font-sans text-[16px] hover:bg-gray-400 hover:cursor-pointer"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={editLoading}
-                                    className={`px-4 py-2 bg-[#543786] text-white rounded-[10px] font-sans text-[16px] hover:bg-[#9D88C1] ${editLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`px-4 py-2 bg-[#543786] text-white rounded-[10px] font-sans text-[16px] hover:bg-[#9D88C1] hover:cursor-pointer ${editLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     {editLoading ? "Saving..." : "Save"}
                                 </button>

@@ -5,11 +5,9 @@ import {Register} from "./auth/register.jsx";
 import {SearchResults} from "./search/searchResults.jsx";
 import {EditProfile} from "./user/editProfile.jsx";
 import {Profile} from "./user/profile.jsx";
-import {BookingSuccess} from "./venue/bookingSuccess.jsx";
 import {CreateVenue} from "./venue/createVenue.jsx";
 import {EditVenue} from "./venue/editVenue.jsx";
 import {Venue} from "./venue/venue.jsx";
-import {NotFound} from "./NotFound.jsx";
 
 export {
     Featured,
@@ -19,9 +17,7 @@ export {
     SearchResults,
     EditProfile,
     Profile,
-    BookingSuccess,
     CreateVenue,
     EditVenue,
     Venue,
-    NotFound
 }
