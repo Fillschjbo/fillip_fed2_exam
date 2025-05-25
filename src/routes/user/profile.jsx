@@ -4,7 +4,7 @@ import { useEdit } from "../../hooks/api/useEdit.jsx";
 import { API_PROFILE, API_BOOKINGS } from "../../utilities/constants.js";
 import { TbPencil } from "react-icons/tb";
 import { SearchResultCard } from "../../components/Cards/SearchResultCard.jsx";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -74,6 +74,14 @@ export function Profile() {
         setSelectedBooking(null);
         setFormData({ dateFrom: null, dateTo: null, guests: 1 });
     };
+
+    useEffect(() => {
+        if (loading || error || !profile || !profile.name) {
+            document.title = "Holidaze | Loading...";
+        } else {
+            document.title = `Holidaze | ${profile.name}`;
+        }
+    }, [loading, error, profile]);
 
     if (loading) {
         return <>Loading...</>;
