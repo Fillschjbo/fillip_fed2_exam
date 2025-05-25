@@ -7,13 +7,15 @@ import { SearchResultCard } from "../../components/Cards/SearchResultCard.jsx";
 import {useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {useDelete} from "../../hooks/api/useDelete.jsx";
 
 export function Profile() {
     const { name } = useParams();
-    const { data: profile, loading, error } = useFetch(`${API_PROFILE}/${name}?_bookings=true&_venues=true`);
+    const { data: profile, loading, error, refetch } = useFetch(`${API_PROFILE}/${name}?_bookings=true&_venues=true`);
     const { edit, loading: editLoading, error: editError, data: editData } = useEdit();
     const [activeView, setActiveView] = useState("bookings");
     const [selectedBooking, setSelectedBooking] = useState(null);
+    const { deleteData, data: deleteDataResponse, loading: deleteLoading, error: deleteError } = useDelete();
     const [formData, setFormData] = useState({
         dateFrom: null,
         dateTo: null,
@@ -63,9 +65,17 @@ export function Profile() {
             dateTo: formData.dateTo.toISOString(),
             guests: parseInt(formData.guests, 10),
         };
-        await edit(`${API_BOOKINGS}/${selectedBooking.id}`, payload);
-        if (!editError) {
-            setSelectedBooking(null);
+
+        try {
+            await edit(`${API_BOOKINGS}/${selectedBooking.id}`, payload);
+            if (!editError) {
+                setSelectedBooking(null);
+                if (refetch) {
+                    refetch();
+                }
+            }
+        } catch (err) {
+            console.error("Error updating booking:", err);
         }
     };
 
@@ -82,6 +92,27 @@ export function Profile() {
             document.title = `Holidaze | ${profile.name}`;
         }
     }, [loading, error, profile]);
+
+    const handleDeleteBooking = async (bookingId) => {
+        if (!window.confirm("Are you sure you want to delete this booking?")) {
+            return;
+        }
+
+        try {
+            await deleteData(`${API_BOOKINGS}/${bookingId}`);
+
+            closeModal();
+
+            if (refetch) {
+                refetch();
+            } else {
+                window.location.reload();
+            }
+        } catch (err) {
+            console.error("Delete error:", err);
+            alert(`Failed to delete booking: ${err.message}`);
+        }
+    };
 
     if (loading) {
         return <>Loading...</>;
@@ -195,6 +226,7 @@ export function Profile() {
                         }
                     }}
                 >
+
                     <div className="bg-white p-6 rounded-[20px] w-full max-w-md relative">
                         <button
                             onClick={closeModal}
@@ -207,6 +239,18 @@ export function Profile() {
                         <p className="text-gray-600 mb-4">
                             Venue: {selectedBooking.venue?.name || "Unknown Venue"}
                         </p>
+
+                        <div className="mb-4">
+                            <button
+                                onClick={() => handleDeleteBooking(selectedBooking.id)}
+                                disabled={deleteLoading}
+                                className={`bg-red-500 text-white px-4 py-2 rounded-[10px] font-sans text-[16px] w-full ${deleteLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-red-600"}`}
+                                aria-label={`Delete booking for ${selectedBooking.venue?.name || "venue"}`}
+                            >
+                                {deleteLoading ? "Deleting..." : "Delete Booking"}
+                            </button>
+                        </div>
+
                         {editError && (
                             <p className="text-red-500 font-sans text-[16px] mb-4">
                                 {editError.message || "Failed to update booking"}
@@ -216,6 +260,9 @@ export function Profile() {
                             <p className="text-green-500 font-sans text-[16px] mb-4">
                                 Booking updated successfully!
                             </p>
+                        )}
+                        {deleteError && (
+                            <p className="text-red-500 font-sans text-[16px] mb-4">{deleteError.message || "Failed to delete booking"}</p>
                         )}
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                             <div>
