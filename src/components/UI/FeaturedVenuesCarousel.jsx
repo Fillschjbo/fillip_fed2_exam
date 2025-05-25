@@ -5,12 +5,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import {useFetch} from "../../hooks/api/useFetch.jsx";
-import {API_PROFILE} from "../../utilities/constants.js";
+import {API_PROFILE, API_VENUE} from "../../utilities/constants.js";
 
 
 export function FeaturedVenuesCarousel () {
-    const { data, loading, error } = useFetch(`${API_PROFILE}/venuemanagertest?_venues=true`, false);
-    const venues = data?.venues || [];
+    const { data, loading, error } = useFetch(`${API_VENUE}?limit=4&sort=rating&sortOrder=desc`, false);
+    const venues = data|| [];
 
     if (loading) return <div className="text-center text-gray-600">Loading venues...</div>;
     if (error) return <div className="text-center text-red-500">Error loading venues: {error.message}</div>;
