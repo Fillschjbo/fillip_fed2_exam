@@ -8,6 +8,7 @@ import {LuCircleParking, LuCircleParkingOff, LuWifi, LuWifiOff} from "react-icon
 import {TbBread, TbBreadOff, TbPaw, TbPawOff, TbPencil, TbTrash} from "react-icons/tb";
 import {useDelete} from "../../hooks/api/useDelete.jsx";
 import {toast} from "react-hot-toast";
+import {LiaArrowRightSolid} from "react-icons/lia";
 
 export function Venue(){
     const {id} = useParams()
@@ -135,6 +136,50 @@ export function Venue(){
 
                 <BookingComponent bookings={venues.bookings} venueId={id} />
 
+                {user && venues.owner.name === user.name ? (
+                    <div className="w-full flex flex-col gap-2 mt-6">
+                        <h3 className="font-sans text-[24px] font-bold tracking-wide">Venue Bookings</h3>
+                        {venues.bookings?.length > 0 ? (
+                            venues.bookings.map((booking) => {
+                                console.log("Mapping booking:", booking); // Debug log
+                                return (
+                                    <div key={booking.id} className="w-full flex flex-col items-between justify-center p-2 border border-gray-300 rounded-[10px]">
+                                        <div className={"flex justify-between"}>
+                                            <p className="font-sans text-[16px] font-bold">
+                                                {booking.dateFrom
+                                                    ? new Date(booking.dateFrom).toLocaleDateString("en-US", {
+                                                        year: "numeric",
+                                                        month: "short",
+                                                        day: "numeric",
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                    })
+                                                    : "No start date"}
+                                            </p>
+                                            <LiaArrowRightSolid />
+                                            <p className="font-sans text-[16px] font bold">
+                                                {booking.dateTo
+                                                    ? new Date(booking.dateTo).toLocaleDateString("en-US", {
+                                                        year: "numeric",
+                                                        month: "short",
+                                                        day: "numeric",
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                    })
+                                                    : "No end date"}
+                                            </p>
+                                        </div>
+                                        <h2 className={"font-sans text-sm"}>Booked by: {booking.customer.name}</h2>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p className="font-sans text-[16px] text-gray-600">No bookings for this venue.</p>
+                        )}
+                    </div>
+                ) : (
+                    ""
+                )}
             </div>
         </div>
     );
