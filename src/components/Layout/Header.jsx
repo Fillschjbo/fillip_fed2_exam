@@ -35,7 +35,7 @@ export function Header() {
                 <div></div>
                 <div className={"flex h-full font-serif md:text-[45px] text-3xl gap-[64px] items-center pl-[10vw]"}>
                     <a href="/" className={"pt-[15px]"}>Featured</a>
-                    <a href="/"><img src={holidaze} alt="holidaze logo" className={"h-[56px] w-[157px]"}/></a>
+                    <a href="/" ><img src={holidaze} alt="holidaze logo" className={"h-[56px] min-w-[100px] max-w-[200px] w-[10vw]"}/></a>
                     <a href="/venues" className={"pt-[15px]"}>Venues</a>
                 </div>
 
