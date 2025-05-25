@@ -47,9 +47,9 @@ export function Header() {
                                 {user.name || "User"}
                             </p>
                             <img
-                                src={user.avatar || "https://via.placeholder.com/48"}
+                                src={user.avatar || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
                                 alt={`${user.name || "User"}'s profile image`}
-                                className="size-12 rounded-full"
+                                className="size-12 rounded-full object-cover"
                             />
                         </div>
                     ) : (
